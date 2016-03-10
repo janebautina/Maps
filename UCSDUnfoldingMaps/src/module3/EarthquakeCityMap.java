@@ -28,7 +28,7 @@ import parsing.ParseFeed;
  * earthquake data. Author: UC San Diego Intermediate Software Development MOOC
  * team
  * 
- * @author Your name here Date: July 17, 2015
+ * @author Jane Bautina: March 9, 2016
  */
 public class EarthquakeCityMap extends PApplet {
 
@@ -154,9 +154,5 @@ public class EarthquakeCityMap extends PApplet {
 		fill(0, 0, 0);
 		textSize(12);
 		text(low, 70, 220);
-
-		// ellipse();
-		// ellipse();
-
 	}
 }
