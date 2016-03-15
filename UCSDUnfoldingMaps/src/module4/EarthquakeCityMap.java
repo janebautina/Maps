@@ -11,6 +11,7 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.AbstractShapeMarker;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MultiMarker;
+import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
 import de.fhpotsdam.unfolding.utils.MapUtils;
@@ -93,7 +94,7 @@ public class EarthquakeCityMap extends PApplet {
 		// earthquakesURL = "test2.atom";
 
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
-		// earthquakesURL = "quiz1.atom";
+		 earthquakesURL = "quiz1.atom";
 
 		// (2) Reading in earthquake data and geometric properties
 		// STEP 1: load country features and markers
@@ -130,6 +131,7 @@ public class EarthquakeCityMap extends PApplet {
 		// for their geometric properties
 		map.addMarkers(quakeMarkers);
 		map.addMarkers(cityMarkers);
+		
 
 	} // End setup
 
@@ -168,8 +170,8 @@ public class EarthquakeCityMap extends PApplet {
 		ellipse(50, 204, 15, 15);
 		fill(color(255, 0, 0));
 		ellipse(50, 228, 15, 15);
-		fill(255, 250, 240);
-		ellipse(50, 254, 15, 15);
+		//fill(255, 250, 240);
+		//ellipse(50, 254, 15, 15);
 
 		fill(0, 0, 0);
 		text("City Marker", 75, 74);
