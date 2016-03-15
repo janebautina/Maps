@@ -56,9 +56,13 @@ public class EarthquakeCityMap extends PApplet {
 	private List<Marker> cityMarkers;
 	// Markers for each earthquake
 	private List<Marker> quakeMarkers;
+	//list of countries
+	private List<Feature> countries;
 
 	// A List of country markers
 	private List<Marker> countryMarkers;
+	// A list of earthquakes
+	private List<PointFeature> earthquakes;
 	
 	public void setup() {		
 		// (1) Initializing canvas and map tiles
@@ -85,7 +89,7 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// (2) Reading in earthquake data and geometric properties
 	    //     STEP 1: load country features and markers
-		List<Feature> countries = GeoJSONReader.loadData(this, countryFile);
+		countries = GeoJSONReader.loadData(this, countryFile);
 		countryMarkers = MapUtils.createSimpleMarkers(countries);
 		
 		//     STEP 2: read in city data
@@ -96,7 +100,7 @@ public class EarthquakeCityMap extends PApplet {
 		}
 	    
 		//     STEP 3: read in earthquake RSS feed
-	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
+	    earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 	    quakeMarkers = new ArrayList<Marker>();
 	    
 	    for(PointFeature feature : earthquakes) {
@@ -162,6 +166,11 @@ public class EarthquakeCityMap extends PApplet {
 	// set this "country" property already.  Otherwise it returns false.
 	private boolean isLand(PointFeature earthquake) {
 		
+		for (Marker country: countryMarkers){
+			if(isInCountry(earthquake, country)){
+				return true;
+			}
+		}
 		// IMPLEMENT THIS: loop over all countries to check if location is in any of them
 		
 		// TODO: Implement this method using the helper method isInCountry
@@ -179,6 +188,28 @@ public class EarthquakeCityMap extends PApplet {
 	private void printQuakes() 
 	{
 		// TODO: Implement this method
+		List <PointFeature> earthQuakeInCountry = new ArrayList<PointFeature>();
+		int numberEarthQuakesInOcean = 0;
+		for (PointFeature earthquake: earthquakes){
+			if (isLand(earthquake)){
+				earthQuakeInCountry.add(earthquake);
+			}
+			else{
+				numberEarthQuakesInOcean++;
+			}
+		}
+		for (Marker country: countryMarkers){
+			int numberEarthQuakesInCountry = 0;
+			for (PointFeature earthquake: earthQuakeInCountry){
+				if(isInCountry(earthquake,country)){
+					numberEarthQuakesInCountry++;
+				}
+			}
+			if(numberEarthQuakesInCountry >= 1){
+				System.out.println(country.getProperty("name")+ " "+ numberEarthQuakesInCountry+". ");
+			}
+		}
+		System.out.println("There were " + numberEarthQuakesInOcean+ " in the ocean.");	
 	}
 	
 	
