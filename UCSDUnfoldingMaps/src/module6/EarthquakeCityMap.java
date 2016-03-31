@@ -1,5 +1,6 @@
 package module6;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,7 +82,7 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
-		//earthquakesURL = "test1.atom";
+		earthquakesURL = "test1.atom";
 		//earthquakesURL = "test2.atom";
 		
 		// Uncomment this line to take the quiz
@@ -117,6 +118,8 @@ public class EarthquakeCityMap extends PApplet {
 
 	    // could be used for debugging
 	    printQuakes();
+	    sortAndPrint(30);
+	    mySortAndPrint(10);
 	 		
 	    // (3) Add markers to map
 	    //     NOTE: Country markers are not added to the map.  They are used
@@ -139,7 +142,64 @@ public class EarthquakeCityMap extends PApplet {
 	// TODO: Add the method:
 	//   private void sortAndPrint(int numToPrint)
 	// and then call that method from setUp
+	/**
+	 * Creates a new array of earthquake markers  
+	 * sorts the array of EarthQuake markers in reverse 
+	 * order of magnitude(high->low)print the top of 
+	 * numToPrint earthquakes
+	 * 
+	 * @param numToPrint number elements to display
+	 */
+	private void sortAndPrint(int numToPrint){
+		Object[] markersArray =  quakeMarkers.toArray();
+		Arrays.sort(markersArray);
+		for (int i = 0; i < numToPrint && i < markersArray.length; i++){
+			System.out.println(markersArray[i]);
+		}	
+	}
 	
+	private void mySortAndPrint(int numToPrint) {
+		Object[] markersArray =  quakeMarkers.toArray();
+		System.out.println("My Custom Quick Sort");
+		mySort(markersArray);
+		for (int i = 0; i < numToPrint && i < markersArray.length; i++){
+			System.out.println(markersArray[i]);
+		}
+	}
+	
+	// Quick Sort
+	private static void mySort(Object[] markersArray) {
+		quickSort(markersArray, 0, markersArray.length - 1);
+	}
+
+	private static void quickSort(Object[] a, int low, int high) {
+		if (low < high) {
+			int p = partition(a, low, high);
+			quickSort(a, low, p - 1);
+			quickSort(a, p + 1, high);
+		}
+	}
+
+	private static int partition(Object[] a, int low, int high) {
+		int i = low;
+		int j = high + 1;
+		Object v = a[low];
+		while (true) {
+			while (((Comparable<Object>) a[++i]).compareTo(v) <= 0) if (i == high) break;
+			while (((Comparable<Object>) a[--j]).compareTo(v) > 0) if (j == low) break;
+			if(i >= j) break;
+			swap(a, i, j);
+		}
+		swap(a, low, j); //exchange the elements in the array
+		return j;
+	}
+
+	private static void swap(Object[] x, int a, int b) {
+		Object temp = x[a];
+		x[a] = x[b];
+		x[b] = temp;
+	}
+
 	/** Event handler that gets called automatically when the 
 	 * mouse moves.
 	 */
